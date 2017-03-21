@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DateTimeNowTestingExample.Classes;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DateTimeNowTestingExample.Controllers
@@ -10,6 +11,8 @@ namespace DateTimeNowTestingExample.Controllers
     {
         public IActionResult Index()
         {
+            ViewData["Message"] = GetDateAwareGreeting();
+
             return View();
         }
 
@@ -30,6 +33,33 @@ namespace DateTimeNowTestingExample.Controllers
         public IActionResult Error()
         {
             return View();
+        }
+
+        public string GetDateAwareGreeting()
+        {
+            var today = TestableDateTime.GetDateTimeNow().DayOfWeek;
+
+            switch (today)
+            {
+                case DayOfWeek.Monday:
+                    return "It's the start of a new week!";
+                case DayOfWeek.Tuesday:
+                    return "Almost halfway there!";
+                case DayOfWeek.Wednesday:
+                    return "Happy Humpday!";
+                case DayOfWeek.Thursday:
+                    return "Almost Friday!";
+                case DayOfWeek.Friday:
+                    return "TGIF!";
+                case DayOfWeek.Saturday:
+                    return "It's Saturday!";
+                case DayOfWeek.Sunday:
+                    return "Let's get ready for a new week!";
+                default:
+                    return "Greetings!";
+            }
+
+           
         }
     }
 }
